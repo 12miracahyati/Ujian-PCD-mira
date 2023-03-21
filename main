@@ -1,0 +1,54 @@
+import tkinter as tk
+from PIL import ImageTk, Image, ImageOps
+
+
+# Fungsi untuk membaca gambar
+def read_image():
+    global img, img_copy
+    img_path = "mira.jpg" # Ubah dengan path gambar yang ingin diolah
+    img = Image.open(img_path)
+    img_copy = img.copy()
+
+# Fungsi untuk mengubah gambar menjadi grayscale
+def grayscale():
+    global img_copy
+    img_copy = img.copy().convert('L')
+    img_copy = ImageTk.PhotoImage(img_copy)
+    panel.config(image=img_copy)
+    panel.image = img_copy
+
+# Fungsi untuk mengubah gambar menjadi negative
+def negative():
+    global img_copy
+    img_copy = ImageOps.invert(img)
+    img_copy = ImageTk.PhotoImage(img_copy)
+    panel.config(image=img_copy)
+    panel.image = img_copy
+
+# Inisialisasi window
+root = tk.Tk()
+root.title("Aplikasi Perbaikan Citra Mira")
+root.geometry("600x400")
+
+# Frame untuk tombol
+button_frame = tk.Frame(root)
+button_frame.pack(side=tk.BOTTOM)
+
+# Tombol untuk membaca gambar
+read_button = tk.Button(button_frame, text="Baca Gambar", command=read_image)
+read_button.pack(side=tk.LEFT, padx=10, pady=10)
+
+# Tombol untuk mengubah gambar menjadi grayscale
+grayscale_button = tk.Button(button_frame, text="Grayscale", command=grayscale)
+grayscale_button.pack(side=tk.LEFT, padx=10, pady=10)
+
+# Tombol untuk mengubah gambar menjadi negative
+negative_button = tk.Button(button_frame, text="Negative", command=negative)
+negative_button.pack(side=tk.LEFT, padx=10, pady=10)
+
+# Panel untuk menampilkan gambar
+panel = tk.Label(root)
+panel.pack(side=tk.TOP, padx=10, pady=10)
+
+# Menampilkan window
+root.mainloop()
